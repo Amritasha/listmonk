@@ -3,14 +3,7 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "./entrypoint.sh"
-healthcheckPath = "/api/health"
-healthcheckTimeout = 60
+healthcheckPath = "/health"
+healthcheckTimeout = 120
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
-
-[[services]]
-name = "listmonk"
-
-[services.variables]
-PORT = "9000"
