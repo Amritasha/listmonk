@@ -5,8 +5,6 @@ set -e
 cat > /listmonk/config.toml << EOF
 [app]
 address = "0.0.0.0:9000"
-admin_username = "${LISTMONK_ADMIN_USER}"
-admin_password = "${LISTMONK_ADMIN_PASSWORD}"
 
 [db]
 host = "${PGHOST}"
