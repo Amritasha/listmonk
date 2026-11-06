@@ -17,6 +17,17 @@ Hosting listmonk requires running its Go-based application server alongside a Po
 - **PostgreSQL** — primary data store for subscribers, lists, campaigns, and analytics
 - **SMTP provider** — external mail relay (e.g. Amazon SES, Postmark, SendGrid, Mailgun) for email delivery
 
+### Uploads
+
+Campaign images and attachments are written to `/listmonk/uploads`, which this
+template mounts as a volume. Without one they sit on the container filesystem
+and are discarded on every redeploy, so campaigns you already sent end up
+pointing at images that no longer load.
+
+After deploying, open **Admin → Settings → Media** and confirm the upload path
+is `/listmonk/uploads` — listmonk keeps that setting in the database, so a
+volume mounted anywhere else is simply unused.
+
 ### Deployment Dependencies
 
 - [listmonk Documentation](https://listmonk.app/docs/)
