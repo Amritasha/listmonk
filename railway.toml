@@ -8,14 +8,6 @@ healthcheckTimeout = 120
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
-# Listmonk's default media provider writes uploads -- the images and files you
-# attach to campaigns -- to the "uploads" directory under its working directory
-# (/listmonk). Without a volume those live on the container filesystem and are
-# discarded on redeploy, so campaigns that already went out end up pointing at
-# images that no longer resolve.
-#
-# Check Admin -> Settings -> Media after deploying: the upload path must be
-# /listmonk/uploads for this volume to be the directory actually used.
-[[volumes]]
-mountPath = "/listmonk/uploads"
-name = "listmonk-uploads"
+# Note: the uploads volume is NOT declared here. Railway's config-as-code does
+# not create volumes -- a [[volumes]] block is silently ignored -- so it lives
+# in the Railway template definition instead, mounted at /listmonk/uploads.

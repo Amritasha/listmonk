@@ -21,7 +21,15 @@ max_idle = 25
 max_lifetime = "300s"
 EOF
 
-# Run DB install/migrations (idempotent — safe on every start)
+# Create the schema on a fresh database. Idempotent: a no-op once installed.
 ./listmonk --config config.toml --install --idempotent --yes
+
+# Apply any pending schema migrations. --install does NOT do this: on an
+# existing database whose schema predates the binary, listmonk exits with
+# "there are N pending database upgrade(s) ... run listmonk --upgrade" and the
+# service never starts. Running it here is a no-op when the schema is current
+# ("no upgrades to run"), and the version pin above means migrations only move
+# when the tag is deliberately bumped.
+./listmonk --config config.toml --upgrade --yes
 
 exec ./listmonk --config config.toml
